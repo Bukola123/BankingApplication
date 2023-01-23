@@ -27,6 +27,11 @@ public class UserController {
         return (createUserService.createUser(createUserRequest));
     }
 
+    @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response updateUser(@RequestBody CreateUserRequest createUserRequest){
+        return (createUserService.updateUser(createUserRequest));
+    }
+
     @PostMapping(value = "/mobile/register", consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
     public Response mobileUserRegistration(@RequestBody CreateUserRequest createUserRequest){
         return (createUserService.createUser(createUserRequest));

@@ -66,6 +66,8 @@ public class CreateUserServiceImple implements CreateUserService {
 
     @Override
     public Response updateUser(CreateUserRequest createUserRequest) {
+
+        log.info("Update user details ");
         User user = new User();
         Response response = new Response();
 
@@ -74,15 +76,13 @@ public class CreateUserServiceImple implements CreateUserService {
         user = modelMapper.map(createUserRequest,User.class);
 
         //Check if user on db
-//        userRepository.findByEmail();
-        user.setCreateDate(LocalTime.now());
+        User user1 = userRepository.findByEmail(createUserRequest.getEmail());
+        user.setUpdateDate(LocalTime.now());
 
-        Account account = new Account();
-        account.setAccountNo(generateRandomNo(10));
-        account.setAccountType(createUserRequest.getAccountType());
-        account.setCreateDate(LocalTime.now());
-
+        log.info("User 00 {}", user1);
+        log.info("User {}", user);
         userRepository.save(user);
+//        userRepository.update(user);
         Long userId= user.getUserId();
 
         log.info("User {}", userId);
