@@ -3,6 +3,7 @@ package com.bankApp.authentication.service.impli;
 import com.bankApp.authentication.dto.request.CreateUserRequest;
 import com.bankApp.authentication.model.Account;
 import com.bankApp.authentication.model.User;
+import com.bankApp.authentication.repository.AccountRepository;
 import com.bankApp.authentication.repository.UserRepository;
 import com.bankApp.authentication.service.CreateUserService;
 import com.bankApp.authentication.utils.Response;
@@ -13,6 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
+import java.util.List;
+
+import static com.bankApp.authentication.utils.Utils.generateRandomNo;
+
 @Service
 @Slf4j
 public class CreateUserServiceImple implements CreateUserService {
@@ -20,7 +26,9 @@ public class CreateUserServiceImple implements CreateUserService {
     @Autowired
     UserRepository userRepository;
 
-    @Override
+
+
+
     public Response createUser(CreateUserRequest createUserRequest) {
         User user = new User();
         Response response = new Response();
@@ -28,7 +36,17 @@ public class CreateUserServiceImple implements CreateUserService {
         ModelMapper modelMapper = new ModelMapper();
 
         user = modelMapper.map(createUserRequest,User.class);
-       userRepository.save(user);
+
+        user.setCreateDate(LocalTime.now());
+
+        Account account = new Account();
+        account.setAccountNo("00"+generateRandomNo(8));
+        account.setAccountType(createUserRequest.getAccountType());
+        account.setCreateDate(LocalTime.now());
+        user.setAccount(account);
+
+        log.info("User {} ", user);
+        userRepository.save(user);
         Long userId= user.getUserId();
 
         log.info("User {}", userId);
@@ -44,5 +62,46 @@ public class CreateUserServiceImple implements CreateUserService {
             response.setStatus(HttpStatus.OK);
         }
         return response;
+    }
+
+    @Override
+    public Response updateUser(CreateUserRequest createUserRequest) {
+        User user = new User();
+        Response response = new Response();
+
+        ModelMapper modelMapper = new ModelMapper();
+
+        user = modelMapper.map(createUserRequest,User.class);
+
+        //Check if user on db
+//        userRepository.findByEmail();
+        user.setCreateDate(LocalTime.now());
+
+        Account account = new Account();
+        account.setAccountNo(generateRandomNo(10));
+        account.setAccountType(createUserRequest.getAccountType());
+        account.setCreateDate(LocalTime.now());
+
+        userRepository.save(user);
+        Long userId= user.getUserId();
+
+        log.info("User {}", userId);
+
+        if (userId != null){
+            response.setResponseCode("000");
+            response.setResponseMessage("Successful ");
+            response.setStatus(HttpStatus.OK);
+
+        }else{
+            response.setResponseCode("99");
+            response.setResponseMessage("Unsuccessful ");
+            response.setStatus(HttpStatus.OK);
+        }
+        return response;
+    }
+
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
     }
 }

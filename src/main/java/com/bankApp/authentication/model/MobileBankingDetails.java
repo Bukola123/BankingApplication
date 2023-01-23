@@ -12,7 +12,8 @@ import javax.persistence.Id;
 public class MobileBankingDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long accountId;
+    private Long id;
+    private Long userId;
     private String username;
     private String password;
 }
