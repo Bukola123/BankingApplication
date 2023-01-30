@@ -1,7 +1,6 @@
 package com.bankApp.authentication.service.impli;
 
 import com.bankApp.authentication.dto.request.CreateUserRequest;
-import com.bankApp.authentication.dto.request.LoginUserRequest;
 import com.bankApp.authentication.dto.request.MobileAppRegRequest;
 import com.bankApp.authentication.model.Account;
 import com.bankApp.authentication.model.MobileBankingDetails;
@@ -60,14 +59,12 @@ public class CreateUserServiceImpli implements CreateUserService {
         if (userId != null){
             response.setResponseCode("000");
             response.setResponseMessage("Successful ");
-            response.setStatus(HttpStatus.OK);
 
             //Send notification to user
 
         }else{
             response.setResponseCode("99");
             response.setResponseMessage("Unsuccessful ");
-            response.setStatus(HttpStatus.OK);
         }
         return response;
     }
@@ -99,12 +96,10 @@ public class CreateUserServiceImpli implements CreateUserService {
         if (userId != null){
             response.setResponseCode("000");
             response.setResponseMessage("Successful ");
-            response.setStatus(HttpStatus.OK);
 
         }else{
             response.setResponseCode("99");
             response.setResponseMessage("Unsuccessful ");
-            response.setStatus(HttpStatus.OK);
         }
         return response;
     }
@@ -113,15 +108,19 @@ public class CreateUserServiceImpli implements CreateUserService {
         log.info("Request {}", mobileAppRegRequest);
         Response response = new Response();
         //Check if user exist and return user table
-        User user = findByAccount(mobileAppRegRequest.getAccount());
+        Account account = new Account();
+        account.setAccountNo(mobileAppRegRequest.getAccountNo());
+        User user = findByAccount(account);
         if (user.getUserId() == null){
             response.setResponseCode("99");
             response.setResponseMessage("User not found");
         }
         //Reg user
-        mobileAppRegRequest.getMobileBankingDetails().setUserId(user.getUserId());
-        mobileAppRegRequest.getMobileBankingDetails().setEmail(user.getEmail());
-        MobileBankingDetails mobileBankingDetails = mobileBankingRepository.save(mobileAppRegRequest.getMobileBankingDetails());
+        MobileBankingDetails mobileBankingDetails = new MobileBankingDetails();
+        mobileBankingDetails.setUserId(user.getUserId());
+        mobileBankingDetails.setEmail(user.getEmail());
+        mobileBankingDetails.setPassword(mobileAppRegRequest.getPassword());
+        mobileBankingDetails = mobileBankingRepository.save(mobileBankingDetails);
         log.info("Response {}", mobileBankingDetails);
         if(mobileBankingDetails.getId() == null){
             response.setResponseCode("99");
