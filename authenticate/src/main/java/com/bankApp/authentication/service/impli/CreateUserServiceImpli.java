@@ -127,7 +127,7 @@ public class CreateUserServiceImpli implements CreateUserService {
             response.setResponseCode("Unable to register profile");
         }
         response.setResponseCode("00");
-        response.setResponseCode("Profile successfully created");
+        response.setResponseCode("Profile successfully  created");
         return response;
 
     }
