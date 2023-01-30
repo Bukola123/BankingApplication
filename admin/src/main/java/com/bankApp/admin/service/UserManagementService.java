@@ -12,7 +12,8 @@ public interface UserManagementService {
     public Response updateUser(UserRequest createUserRequest);
 
     public List<User> getAllUsers();
-    public User findByAccount(Account accountNo);
+//    public User findByAccount(Account accountNo);
+    public User findByAccount(Account account);
 
     public User findByEmail(UserRequest createUserRequest);
 }

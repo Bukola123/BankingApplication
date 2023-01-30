@@ -16,16 +16,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
-    @Column(nullable = false, unique = true, length = 45)
+    @Column(nullable = false, length = 45)
     private String dateOfBirth;
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false,  length = 20)
     private String firstName;
     private String middleName;
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false, length = 20)
     private String lastName;
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false, length = 20)
     private String address;
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false, unique = true, length = 200)
     private String email;
     @Column(nullable = false, unique = true, length = 20)
     private String phone;
@@ -34,7 +34,7 @@ public class User {
 
 
     @OneToOne(targetEntity = Account.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "accountId_fk", referencedColumnName = "accountId")
+    @JoinColumn(name = "accountId_fk", referencedColumnName = "id")
     private Account account;
 
 

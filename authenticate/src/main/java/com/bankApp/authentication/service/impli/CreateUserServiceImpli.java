@@ -1,11 +1,16 @@
 package com.bankApp.authentication.service.impli;
 
 import com.bankApp.authentication.dto.request.CreateUserRequest;
+import com.bankApp.authentication.dto.request.LoginUserRequest;
+import com.bankApp.authentication.dto.request.MobileAppRegRequest;
 import com.bankApp.authentication.model.Account;
+import com.bankApp.authentication.model.MobileBankingDetails;
 import com.bankApp.authentication.model.User;
+import com.bankApp.authentication.repository.MobileBankingRepository;
 import com.bankApp.authentication.repository.UserRepository;
 import com.bankApp.authentication.service.CreateUserService;
 import com.bankApp.authentication.utils.Response;
+import com.bankApp.authentication.utils.exemptions.GeneralExceptions;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +28,9 @@ public class CreateUserServiceImpli implements CreateUserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    MobileBankingRepository mobileBankingRepository;
 
 
 
@@ -53,6 +61,8 @@ public class CreateUserServiceImpli implements CreateUserService {
             response.setResponseCode("000");
             response.setResponseMessage("Successful ");
             response.setStatus(HttpStatus.OK);
+
+            //Send notification to user
 
         }else{
             response.setResponseCode("99");
@@ -99,14 +109,51 @@ public class CreateUserServiceImpli implements CreateUserService {
         return response;
     }
 
+    public Response mobileAppReg(MobileAppRegRequest mobileAppRegRequest){
+        log.info("Request {}", mobileAppRegRequest);
+        Response response = new Response();
+        //Check if user exist and return user table
+        User user = findByAccount(mobileAppRegRequest.getAccount());
+        if (user.getUserId() == null){
+            response.setResponseCode("99");
+            response.setResponseMessage("User not found");
+        }
+        //Reg user
+        mobileAppRegRequest.getMobileBankingDetails().setUserId(user.getUserId());
+        mobileAppRegRequest.getMobileBankingDetails().setEmail(user.getEmail());
+        MobileBankingDetails mobileBankingDetails = mobileBankingRepository.save(mobileAppRegRequest.getMobileBankingDetails());
+        log.info("Response {}", mobileBankingDetails);
+        if(mobileBankingDetails.getId() == null){
+            response.setResponseCode("99");
+            response.setResponseCode("Unable to register profile");
+        }
+        response.setResponseCode("00");
+        response.setResponseCode("Profile successfully created");
+        return response;
 
-    public List<User> getAllUsers(){
-        return userRepository.findAll();
     }
 
 
+
+
+
     public User findByAccount(Account account){
-        User user = userRepository.findByAccount(account.getAccountNo());
+        log.info("Account request {}", account);
+        Account accountDetails= userRepository.findByAccountNo(account.getAccountNo());
+
+        if(accountDetails == null){
+            throw new GeneralExceptions("99","Invalid account provided",HttpStatus.BAD_REQUEST);
+        }
+        log.info("Account no {}", accountDetails);
+        return  findUserByAccountId(accountDetails.getId());
+    }
+
+    public User findUserByAccountId(Long account_id){
+        User user = userRepository.findByAccount_Id(account_id);
+        log.info("User {}", user);
+        if(user == null){
+            throw new GeneralExceptions("99","Invalid account provided",HttpStatus.BAD_REQUEST);
+        }
         return user;
     }
 

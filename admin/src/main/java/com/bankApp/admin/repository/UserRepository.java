@@ -1,5 +1,6 @@
 package com.bankApp.admin.repository;
 
+import com.bankApp.admin.model.Account;
 import com.bankApp.admin.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +16,9 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 //    @Query("SELECT u FROM User u WHERE u.accountId = (SELECT accountId FROM Account a WHERE a.accountNo = ?1)")
 //    @Query("SELECT u FROM User u WHERE u.accountId_fk = ?1")
 //    @Query("SELECT accountId FROM Account a WHERE a.accountNo = ?1")
-    User findByAccount(String accountNo);
+@Query("SELECT a FROM Account a WHERE a.accountNo = ?1")
+    Account findByAccountNo(String accountNo);
+    User findByAccount_Id(Long accountId);
 
 
 

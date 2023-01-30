@@ -1,5 +1,6 @@
 package com.bankApp.authentication.repository;
 
+import com.bankApp.authentication.model.Account;
 import com.bankApp.authentication.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,8 +16,10 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 //    @Query("SELECT u FROM User u WHERE u.accountId = (SELECT accountId FROM Account a WHERE a.accountNo = ?1)")
 //    @Query("SELECT u FROM User u WHERE u.accountId_fk = ?1")
 //    @Query("SELECT u FROM User u INNER JOIN  User ON u.accountId = Account.accountId")
-//    @Query("SELECT accountId FROM Account a WHERE a.accountNo = ?1")
-    User findByAccount(String accountNo);
+//    @Query("SELECT a FROM Account a WHERE a.accountNo = ?1")
+    @Query("SELECT a FROM Account a WHERE a.accountNo = ?1")
+    Account findByAccountNo(String accountNo);
+    User findByAccount_Id(Long accountId);
 
 
 

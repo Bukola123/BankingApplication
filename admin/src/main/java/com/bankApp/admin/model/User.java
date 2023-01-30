@@ -34,7 +34,7 @@ public class User {
 
 
     @OneToOne(targetEntity = Account.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "accountId_fk", referencedColumnName = "accountId")
+    @JoinColumn(name = "accountId_fk", referencedColumnName = "id")
     private Account account;
 
 

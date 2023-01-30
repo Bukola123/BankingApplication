@@ -106,14 +106,22 @@ public class UserManagementServiceImp implements UserManagementService {
     }
 
 
+
+
     public User findByAccount(Account account){
-        User user = userRepository.findByAccount(account.getAccountNo());
+        log.info("Account request {}", account);
+        Account accountDetails= userRepository.findByAccountNo(account.getAccountNo());
+        log.info("Account no {}", accountDetails);
+        return  findUserByAccountId(accountDetails.getId());
+    }
+
+    public User findUserByAccountId(Long account_id){
+        User user= userRepository.findByAccount_Id(account_id);
         return user;
     }
 
     public User findByEmail(UserRequest userRequest){
         User user = new User();
-//        return userRepository.findByEmail(email);
         log.info("Email {}", userRequest.getEmail());
         user = userRepository.findByEmail(userRequest.getEmail());
         log.info("User here {}", user);

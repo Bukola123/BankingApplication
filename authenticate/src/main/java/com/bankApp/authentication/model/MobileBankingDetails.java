@@ -14,8 +14,9 @@ public class MobileBankingDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long userId;
-    private String username;
+    private String email;
     private String password;
+    private Integer pin;
 }
 
 

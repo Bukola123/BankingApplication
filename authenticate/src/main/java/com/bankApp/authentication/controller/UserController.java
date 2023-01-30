@@ -1,11 +1,13 @@
 package com.bankApp.authentication.controller;
 
 import com.bankApp.authentication.dto.request.CreateUserRequest;
+import com.bankApp.authentication.dto.request.MobileAppRegRequest;
 import com.bankApp.authentication.model.Account;
 import com.bankApp.authentication.model.User;
 import com.bankApp.authentication.service.CreateUserService;
 import com.bankApp.authentication.utils.Response;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -32,18 +35,25 @@ public class UserController {
     }
 
     @PostMapping(value = "/mobile/register", consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response mobileUserRegistration(@RequestBody CreateUserRequest createUserRequest){
+    public Response mobileUserRegistration(@RequestBody MobileAppRegRequest mobileAppRegRequest){
+        return (createUserService.mobileAppReg(mobileAppRegRequest));
+    }
+
+
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response loginUser(@RequestBody CreateUserRequest createUserRequest){
         return (createUserService.createUser(createUserRequest));
     }
 
 
     @PostMapping(value = "/get/account")
     public User getByAccountNo(@RequestBody Account accountNo){
-        return (createUserService.findByAccount(accountNo));
+        User user = new User();
+        user= createUserService.findByAccount(accountNo);
+        return (user);
     }
 
-    @PostMapping(value = "/get/email")
-    public User getByEmail(@RequestBody CreateUserRequest createUserRequest){
-        return (createUserService.findByEmail(createUserRequest));
-    }
+
+
+
 }
