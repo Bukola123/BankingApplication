@@ -149,10 +149,10 @@ public class CreateUserServiceImpli implements CreateUserService {
 
     public User findUserByAccountId(Long account_id){
         User user = userRepository.findByAccount_Id(account_id);
-        log.info("User {}", user);
-        if(user == null){
-            throw new GeneralExceptions("99","Invalid account provided",HttpStatus.BAD_REQUEST);
-        }
+        log.info("User details {}", user);
+//        if(user == null){
+//            throw new GeneralExceptions("99","Invalid account provided",HttpStatus.BAD_REQUEST);
+//        }
         return user;
     }
 
