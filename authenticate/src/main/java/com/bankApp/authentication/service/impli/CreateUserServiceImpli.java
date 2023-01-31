@@ -7,6 +7,7 @@ import com.bankApp.authentication.model.MobileBankingDetails;
 import com.bankApp.authentication.model.User;
 import com.bankApp.authentication.repository.MobileBankingRepository;
 import com.bankApp.authentication.repository.UserRepository;
+import com.bankApp.authentication.security.webSecurity;
 import com.bankApp.authentication.service.CreateUserService;
 import com.bankApp.authentication.utils.Response;
 import com.bankApp.authentication.utils.exemptions.GeneralExceptions;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
@@ -119,6 +121,8 @@ public class CreateUserServiceImpli implements CreateUserService {
         MobileBankingDetails mobileBankingDetails = new MobileBankingDetails();
         mobileBankingDetails.setUserId(user.getUserId());
         mobileBankingDetails.setEmail(user.getEmail());
+
+
         mobileBankingDetails.setPassword(mobileAppRegRequest.getPassword());
         mobileBankingDetails = mobileBankingRepository.save(mobileBankingDetails);
         log.info("Response {}", mobileBankingDetails);
