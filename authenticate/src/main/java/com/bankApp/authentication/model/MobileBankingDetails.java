@@ -13,7 +13,7 @@ public class MobileBankingDetails {
     @Column(nullable = false, unique = true, length = 100)
     private Long userId;
     @Column(nullable = false, unique = true, length = 100)
-    private String email;
+    private String username;
     @Column(nullable = false,length = 100)
     private String password;
     private Integer pin;

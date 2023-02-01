@@ -17,6 +17,8 @@ public class CreateUserRequest {
     private String phone;
     private String address;
     private String accountType;
+    private String bvn;
+    private String passport;
 
 
 //    private User user;

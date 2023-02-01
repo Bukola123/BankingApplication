@@ -1,6 +1,7 @@
 package com.bankApp.authentication.controller;
 
 import com.bankApp.authentication.dto.request.CreateUserRequest;
+import com.bankApp.authentication.dto.request.LoginUserRequest;
 import com.bankApp.authentication.dto.request.MobileAppRegRequest;
 import com.bankApp.authentication.model.Account;
 import com.bankApp.authentication.model.User;
@@ -41,8 +42,8 @@ public class UserController {
 
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response loginUser(@RequestBody CreateUserRequest createUserRequest){
-        return (createUserService.createUser(createUserRequest));
+    public Response loginUser(@RequestBody LoginUserRequest request){
+        return (createUserService.loginUser(request));
     }
 
 

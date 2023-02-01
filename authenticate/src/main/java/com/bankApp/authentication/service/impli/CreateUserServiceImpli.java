@@ -1,25 +1,25 @@
 package com.bankApp.authentication.service.impli;
 
 import com.bankApp.authentication.dto.request.CreateUserRequest;
+import com.bankApp.authentication.dto.request.LoginUserRequest;
 import com.bankApp.authentication.dto.request.MobileAppRegRequest;
 import com.bankApp.authentication.model.Account;
 import com.bankApp.authentication.model.MobileBankingDetails;
 import com.bankApp.authentication.model.User;
 import com.bankApp.authentication.repository.MobileBankingRepository;
 import com.bankApp.authentication.repository.UserRepository;
-import com.bankApp.authentication.security.webSecurity;
 import com.bankApp.authentication.service.CreateUserService;
 import com.bankApp.authentication.utils.Response;
+import com.bankApp.authentication.utils.Utils;
 import com.bankApp.authentication.utils.exemptions.GeneralExceptions;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
-import java.util.List;
 
 import static com.bankApp.authentication.utils.Utils.generateRandomNo;
 
@@ -32,6 +32,12 @@ public class CreateUserServiceImpli implements CreateUserService {
 
     @Autowired
     MobileBankingRepository mobileBankingRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private Utils utils;
 
 
 
@@ -106,6 +112,9 @@ public class CreateUserServiceImpli implements CreateUserService {
         return response;
     }
 
+
+
+
     public Response mobileAppReg(MobileAppRegRequest mobileAppRegRequest){
         log.info("Request {}", mobileAppRegRequest);
         Response response = new Response();
@@ -120,21 +129,49 @@ public class CreateUserServiceImpli implements CreateUserService {
         //Reg user
         MobileBankingDetails mobileBankingDetails = new MobileBankingDetails();
         mobileBankingDetails.setUserId(user.getUserId());
-        mobileBankingDetails.setEmail(user.getEmail());
+        mobileBankingDetails.setUsername(user.getEmail());
 
 
-        mobileBankingDetails.setPassword(mobileAppRegRequest.getPassword());
+        mobileBankingDetails.setPassword(passwordEncoder.encode(mobileAppRegRequest.getPassword()));
         mobileBankingDetails = mobileBankingRepository.save(mobileBankingDetails);
         log.info("Response {}", mobileBankingDetails);
         if(mobileBankingDetails.getId() == null){
             response.setResponseCode("99");
-            response.setResponseCode("Unable to register profile");
+            response.setResponseMessage("Unable to register profile");
         }
         response.setResponseCode("00");
-        response.setResponseCode("Profile successfully  created");
+        response.setResponseMessage("Profile successfully  created");
         return response;
 
     }
+
+
+
+    @Override
+    public Response loginUser(LoginUserRequest request){
+        Response response = new Response();
+        log.info("Request {}", request);
+        //Validate userName
+        MobileBankingDetails mobileBankingDetails = utils.validateUserName(request);
+        if(mobileBankingDetails == null){
+           response.setResponseCode("84");
+           response.setResponseMessage("Invalid user");
+            return response;
+        }
+        //Validate password
+        Boolean result = passwordEncoder.matches(request.getPassword(), mobileBankingDetails.getPassword());
+        log.info("Password validation {}", result);
+        if (result == true){
+            response.setResponseCode("00");
+            response.setResponseMessage("User validated");
+        }else{
+        response.setResponseCode("84");
+        response.setResponseMessage("Invalid user");
+        }
+        return response;
+    }
+
+
 
 
 
