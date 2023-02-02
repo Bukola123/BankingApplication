@@ -1,7 +1,7 @@
-package com.bankApp.admin.repository;
+package com.bankApp.admin.accountManagement.repository;
 
-import com.bankApp.admin.model.Account;
-import com.bankApp.admin.model.User;
+import com.bankApp.admin.accountManagement.model.Account;
+import com.bankApp.admin.accountManagement.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

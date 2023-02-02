@@ -1,14 +1,12 @@
-package com.bankApp.admin.controller;
+package com.bankApp.admin.accountManagement.controller;
 
-import com.bankApp.admin.dto.request.UserRequest;
-import com.bankApp.admin.model.Account;
-import com.bankApp.admin.model.User;
-import com.bankApp.admin.service.UserManagementService;
-import com.bankApp.admin.utils.Response;
+import com.bankApp.admin.accountManagement.model.Account;
+import com.bankApp.admin.accountManagement.model.User;
+import com.bankApp.admin.accountManagement.service.UserManagementService;
+import com.bankApp.admin.accountManagement.dto.request.UserRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

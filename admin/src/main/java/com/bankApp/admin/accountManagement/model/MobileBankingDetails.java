@@ -1,4 +1,4 @@
-package com.bankApp.admin.model;
+package com.bankApp.admin.accountManagement.model;
 
 import lombok.Data;
 

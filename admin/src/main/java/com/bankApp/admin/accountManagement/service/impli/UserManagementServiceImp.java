@@ -1,10 +1,10 @@
-package com.bankApp.admin.service.impli;
+package com.bankApp.admin.accountManagement.service.impli;
 
-import com.bankApp.admin.dto.request.UserRequest;
-import com.bankApp.admin.model.Account;
-import com.bankApp.admin.model.User;
-import com.bankApp.admin.repository.UserRepository;
-import com.bankApp.admin.service.UserManagementService;
+import com.bankApp.admin.accountManagement.model.Account;
+import com.bankApp.admin.accountManagement.model.User;
+import com.bankApp.admin.accountManagement.repository.UserRepository;
+import com.bankApp.admin.accountManagement.service.UserManagementService;
+import com.bankApp.admin.accountManagement.dto.request.UserRequest;
 import com.bankApp.admin.utils.Response;
 import com.bankApp.admin.utils.Utils;
 import lombok.extern.slf4j.Slf4j;

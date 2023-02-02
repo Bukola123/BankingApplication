@@ -1,4 +1,4 @@
-package com.bankApp.admin.dto.request;
+package com.bankApp.admin.accountManagement.dto.request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.experimental.Accessors;

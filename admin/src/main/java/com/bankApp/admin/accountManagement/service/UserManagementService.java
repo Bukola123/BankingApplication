@@ -1,8 +1,8 @@
-package com.bankApp.admin.service;
+package com.bankApp.admin.accountManagement.service;
 
-import com.bankApp.admin.dto.request.UserRequest;
-import com.bankApp.admin.model.Account;
-import com.bankApp.admin.model.User;
+import com.bankApp.admin.accountManagement.dto.request.UserRequest;
+import com.bankApp.admin.accountManagement.model.Account;
+import com.bankApp.admin.accountManagement.model.User;
 import com.bankApp.admin.utils.Response;
 
 import java.util.List;
