@@ -21,7 +21,15 @@ public class CreateUserRequest {
     private String passport;
 
 
-//    private User user;
+//Document
+    private String utilityType;
+    private String utilityAddress;
+    private String utilityImage;
 
+    //Id
+    private String idType;
+    private String idNumber;
+    private String idLocation;
+    private String idImage;
 
 }

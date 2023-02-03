@@ -3,15 +3,14 @@ package com.bankApp.authentication.service.impli;
 import com.bankApp.authentication.dto.request.CreateUserRequest;
 import com.bankApp.authentication.dto.request.LoginUserRequest;
 import com.bankApp.authentication.dto.request.MobileAppRegRequest;
-import com.bankApp.authentication.model.Account;
-import com.bankApp.authentication.model.MobileBankingDetails;
-import com.bankApp.authentication.model.User;
+import com.bankApp.authentication.model.*;
 import com.bankApp.authentication.repository.MobileBankingRepository;
 import com.bankApp.authentication.repository.UserRepository;
 import com.bankApp.authentication.service.CreateUserService;
 import com.bankApp.authentication.utils.Response;
 import com.bankApp.authentication.utils.Utils;
 import com.bankApp.authentication.utils.exemptions.GeneralExceptions;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +45,27 @@ public class CreateUserServiceImpli implements CreateUserService {
         User user = new User();
         Response response = new Response();
 
-        ModelMapper modelMapper = new ModelMapper();
+        //check if user already exist
 
-        user = modelMapper.map(createUserRequest,User.class);
+        if( utils.findByEmail(createUserRequest) != null){
+            response.setResponseCode("99");
+            response.setResponseMessage("User already registered");
+            return  response;
+        }
+
+//        ModelMapper modelMapper = new ModelMapper();
+//        user = modelMapper.map(createUserRequest,User.class);
+
+        user.setFirstName(createUserRequest.getFirstName());
+        user.setMiddleName(createUserRequest.getMiddleName());
+        user.setLastName(createUserRequest.getLastName());
+        user.setDateOfBirth(createUserRequest.getDateOfBirth());
+        user.setEmail(createUserRequest.getEmail());
+        user.setPhone(createUserRequest.getPhone());
+        user.setAddress(createUserRequest.getAddress());
+        user.setPhone(createUserRequest.getPhone());
+        user.setBvn(createUserRequest.getBvn());
+
 
         user.setCreateDate(LocalTime.now());
 
@@ -56,7 +73,35 @@ public class CreateUserServiceImpli implements CreateUserService {
         account.setAccountNo("00"+generateRandomNo(8));
         account.setAccountType(createUserRequest.getAccountType());
         account.setCreateDate(LocalTime.now());
+
+        Document document = new Document();
+//        document.setUserId();
+        document.setPassport(createUserRequest.getPassport());
+
+        Utility utility = new Utility();
+        utility.setAccountNo(account.getAccountNo());
+        utility.setUtilityType(createUserRequest.getUtilityType());
+        utility.setUtilityAddress(createUserRequest.getUtilityAddress());
+        utility.setUtilityStatus("Pending");
+
+        //cloudinary call
+        utility.setCloudinary(createUserRequest.getUtilityImage());
+
+
+        IdDetails idDetails = new IdDetails();
+        idDetails.setIdType(createUserRequest.getIdType());
+        idDetails.setIdNumber(createUserRequest.getIdNumber());
+        idDetails.setIDLocation(createUserRequest.getIdLocation());
+        idDetails.setIdStatus("Pending");
+        idDetails.setCloudinary(createUserRequest.getIdImage());
+        idDetails.setAccountNo(account.getAccountNo());
+
+        document.setUtility(utility);
+        document.setIdCard(idDetails);
+        document.setAccountNo(account.getAccountNo());
         user.setAccount(account);
+
+
 
         log.info("User {} ", user);
         userRepository.save(user);
@@ -197,12 +242,5 @@ public class CreateUserServiceImpli implements CreateUserService {
         return user;
     }
 
-    public User findByEmail(CreateUserRequest createUserRequest){
-        User user = new User();
-//        return userRepository.findByEmail(email);
-        log.info("Email {}", createUserRequest.getEmail());
-        user = userRepository.findByEmail(createUserRequest.getEmail());
-        log.info("User here {}", user);
-        return user ;
-    }
+
 }

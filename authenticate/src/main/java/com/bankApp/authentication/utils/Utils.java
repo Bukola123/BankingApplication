@@ -1,8 +1,10 @@
 package com.bankApp.authentication.utils;
 
+import com.bankApp.authentication.dto.request.CreateUserRequest;
 import com.bankApp.authentication.dto.request.LoginUserRequest;
 import com.bankApp.authentication.dto.request.MobileAppRegRequest;
 import com.bankApp.authentication.model.MobileBankingDetails;
+import com.bankApp.authentication.model.User;
 import com.bankApp.authentication.repository.MobileBankingRepository;
 import com.bankApp.authentication.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -44,9 +46,16 @@ public class Utils {
             return mobileBankingDetails;
         }
         return null;
+    }
 
 
-
+    public User findByEmail(CreateUserRequest createUserRequest){
+        User user = new User();
+//        return userRepository.findByEmail(email);
+        log.info("Email {}", createUserRequest.getEmail());
+        user = userRepository.findByEmail(createUserRequest.getEmail());
+        log.info("User here {}", user);
+        return user ;
     }
 
 

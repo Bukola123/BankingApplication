@@ -32,7 +32,7 @@ public class User {
     private LocalTime createDate ;
     private LocalTime updateDate ;
 
-    private String passport;  //To be saved on cloudinary or AWS S3
+//    private String passport;  //To be saved on cloudinary or AWS S3
     @Column(nullable = false, unique = true, length = 100)
     private String bvn;
 
@@ -40,6 +40,9 @@ public class User {
     @OneToOne(targetEntity = Account.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "accountId_fk", referencedColumnName = "id")
     private Account account;
+
+
+
 
 
 
