@@ -18,6 +18,13 @@ public class Account {
     @Column(nullable = false, unique = true, length = 100)
     private String accountNo;
     private String accountType;
+    private int availableBal;
+    private int withrawableBal;
     private LocalTime createDate;
     private LocalTime updateDate;
+
+
+    @OneToOne(targetEntity = Document.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "docId_fk", referencedColumnName = "id")
+    private Document document;
 }

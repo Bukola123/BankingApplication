@@ -15,7 +15,7 @@ public interface CreateUserService {
 
     public User findByAccount(Account accountNo);
 
-    public User findByEmail(CreateUserRequest createUserRequest);
+//    public User findByEmail(CreateUserRequest createUserRequest);
 
     public Response mobileAppReg(MobileAppRegRequest mobileAppRegRequest);
     public Response loginUser(LoginUserRequest loginUserRequest);
