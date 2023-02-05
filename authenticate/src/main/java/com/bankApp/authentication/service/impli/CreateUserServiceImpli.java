@@ -95,10 +95,12 @@ public class CreateUserServiceImpli implements CreateUserService {
         idDetails.setIdStatus("Pending");
         idDetails.setCloudinary(createUserRequest.getIdImage());
         idDetails.setAccountNo(account.getAccountNo());
+        idDetails.setIdSigned(createUserRequest.getIdSigned());
 
         document.setUtility(utility);
         document.setIdCard(idDetails);
         document.setAccountNo(account.getAccountNo());
+        account.setDocument(document);
         user.setAccount(account);
 
 

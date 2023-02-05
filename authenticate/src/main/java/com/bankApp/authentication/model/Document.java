@@ -20,12 +20,12 @@ public class Document {
     @Column(nullable = false, unique = true, length = 100)
     private String passport;
 
-    @OneToOne(targetEntity = Document.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Utility.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "utilityId_fk", referencedColumnName = "id")
 //    @Column(nullable = false, length = 100)
     private Utility utility;
 
-    @OneToOne(targetEntity = Document.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = IdDetails.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "IdCard_fk", referencedColumnName = "id")
 //    @Column(nullable = false, length = 100)
     private IdDetails idCard;
