@@ -31,5 +31,6 @@ public class CreateUserRequest {
     private String idNumber;
     private String idLocation;
     private String idImage;
+    private String idSigned;
 
 }
