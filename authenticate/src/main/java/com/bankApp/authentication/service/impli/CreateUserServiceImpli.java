@@ -7,9 +7,11 @@ import com.bankApp.authentication.model.*;
 import com.bankApp.authentication.repository.MobileBankingRepository;
 import com.bankApp.authentication.repository.UserRepository;
 import com.bankApp.authentication.service.CreateUserService;
+import com.bankApp.authentication.utils.CloudinaryUtils;
 import com.bankApp.authentication.utils.Response;
 import com.bankApp.authentication.utils.Utils;
 import com.bankApp.authentication.utils.exemptions.GeneralExceptions;
+import com.cloudinary.Uploader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -17,7 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.time.LocalTime;
 
 import static com.bankApp.authentication.utils.Utils.generateRandomNo;
@@ -36,12 +40,14 @@ public class CreateUserServiceImpli implements CreateUserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
+    CloudinaryUtils cloudinaryUtils;
+    @Autowired
     private Utils utils;
 
 
 
 
-    public Response createUser(CreateUserRequest createUserRequest) {
+    public Response createUser(CreateUserRequest createUserRequest, MultipartFile multipartFile) {
         User user = new User();
         Response response = new Response();
 
@@ -86,7 +92,7 @@ public class CreateUserServiceImpli implements CreateUserService {
 
         //cloudinary call
         utility.setCloudinary(createUserRequest.getUtilityImage());
-
+        cloudinaryUtils.uploadDoc((File) multipartFile,account.getAccountNo(),"Utility");
 
         IdDetails idDetails = new IdDetails();
         idDetails.setIdType(createUserRequest.getIdType());

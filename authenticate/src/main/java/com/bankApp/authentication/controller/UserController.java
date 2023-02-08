@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/user")
@@ -26,7 +27,7 @@ public class UserController {
     CreateUserService createUserService;
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response createUser(@RequestBody CreateUserRequest createUserRequest){
+    public Response createUser(@RequestBody CreateUserRequest createUserRequest, MultipartFile multipartFile){
         return (createUserService.createUser(createUserRequest));
     }
 
