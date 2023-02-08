@@ -6,11 +6,12 @@ import com.bankApp.authentication.dto.request.MobileAppRegRequest;
 import com.bankApp.authentication.model.Account;
 import com.bankApp.authentication.model.User;
 import com.bankApp.authentication.utils.Response;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface CreateUserService {
-    public Response createUser(CreateUserRequest createUserRequest);
+    public Response createUser(CreateUserRequest createUserRequest, MultipartFile multipartFile);
     public Response updateUser(CreateUserRequest createUserRequest);
 
     public User findByAccount(Account accountNo);
