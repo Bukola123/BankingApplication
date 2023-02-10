@@ -1,12 +1,12 @@
 package com.bankApp.authentication.utils;
 
-import com.bankApp.authentication.dto.request.CreateUserRequest;
-import com.bankApp.authentication.dto.request.LoginUserRequest;
-import com.bankApp.authentication.dto.request.MobileAppRegRequest;
-import com.bankApp.authentication.model.MobileBankingDetails;
-import com.bankApp.authentication.model.User;
-import com.bankApp.authentication.repository.MobileBankingRepository;
-import com.bankApp.authentication.repository.UserRepository;
+import com.bankApp.authentication.auth.dto.request.CreateUserRequest;
+import com.bankApp.authentication.auth.dto.request.LoginUserRequest;
+import com.bankApp.authentication.auth.dto.request.MobileAppRegRequest;
+import com.bankApp.authentication.auth.model.MobileBankingDetails;
+import com.bankApp.authentication.auth.model.User;
+import com.bankApp.authentication.auth.repository.MobileBankingRepository;
+import com.bankApp.authentication.auth.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
