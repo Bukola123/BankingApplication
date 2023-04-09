@@ -8,8 +8,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="admin" />
-        <module name="Authentication" />
         <module name="authenticate" />
+        <module name="Authentication" />
+        <module name="transaction" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -23,6 +24,7 @@
       <module name="BankApplication" options="" />
       <module name="admin" options="-parameters" />
       <module name="authenticate" options="-parameters" />
+      <module name="transaction" options="-parameters" />
     </option>
   </component>
 </project>

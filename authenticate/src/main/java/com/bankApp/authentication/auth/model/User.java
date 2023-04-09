@@ -31,6 +31,7 @@ public class User {
     private String phone;
     private LocalTime createDate ;
     private LocalTime updateDate ;
+    private Boolean mobileReg = false ;
 
 //    private String passport;  //To be saved on cloudinary or AWS S3
     @Column(nullable = false, unique = true, length = 100)

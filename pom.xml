@@ -16,6 +16,7 @@
         <module>admin</module>
         <module>authenticate</module>
         <module>authenticate</module>
+        <module>transaction</module>
     </modules>
 
     <groupId>com.bankApp</groupId>

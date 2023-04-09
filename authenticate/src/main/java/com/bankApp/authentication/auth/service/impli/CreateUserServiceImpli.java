@@ -180,6 +180,18 @@ public class CreateUserServiceImpli implements CreateUserService {
             response.setResponseCode("99");
             response.setResponseMessage("User not found");
         }
+
+        //check if user already reg
+
+
+        MobileBankingDetails userValidation = mobileBankingRepository.findByUsername(user.getEmail());
+
+
+        if (userValidation != null && userValidation.getUsername().equalsIgnoreCase(user.getEmail())){
+            response.setResponseCode("99");
+            response.setResponseMessage("User already registered, kindly proceed to login");
+            return response;
+        }
         //Reg user
         MobileBankingDetails mobileBankingDetails = new MobileBankingDetails();
         mobileBankingDetails.setUserId(user.getUserId());
