@@ -59,5 +59,15 @@ public class Utils {
     }
 
 
+    public User findByID(CreateUserRequest createUserRequest){
+        User user = new User();
+//        return userRepository.findByEmail(email);
+        log.info("Email {}", createUserRequest.getEmail());
+        user = userRepository.findByEmail(createUserRequest.getEmail());
+        log.info("User here {}", user);
+        return user ;
+    }
+
+
 
 }

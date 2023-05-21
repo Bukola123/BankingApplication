@@ -20,9 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.time.LocalTime;
 
 import static com.bankApp.authentication.utils.Utils.generateRandomNo;
@@ -230,6 +228,8 @@ public class CreateUserServiceImpli implements CreateUserService {
         if (result == true){
             response.setResponseCode("00");
             response.setResponseMessage("User validated");
+            //return user details
+            response.setData(userRepository.findByUserID(mobileBankingDetails.getUserId()));
         }else{
         response.setResponseCode("84");
         response.setResponseMessage("Invalid user");
