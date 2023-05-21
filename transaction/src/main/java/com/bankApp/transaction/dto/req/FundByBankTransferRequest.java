@@ -2,11 +2,13 @@ package com.bankApp.transaction.dto.req;
 
 import com.bankApp.transaction.model.Bank;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 
 @Data
 public class FundByBankTransferRequest {
 
-    private String email;  //Email associated with the account
+    @Value("callbackEmail")
+    private String email ;  //The business email address
     private String amount; //Amount to fund
     private String bank;
     private String code; //Bank code associated to the bank with the account no

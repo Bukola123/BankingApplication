@@ -7,7 +7,9 @@ public enum ResponseCodes {
     TRANSACTION_NOT_FOUND("E02", "Transaction not found"),
     INTERNAL_SERVER_ERROR("E03", "An Error occurred while processing request"),
     INVALID_REQUEST("E04", "An Error occurred while processing requests"),
+    BAD_DATA("E1", "BAD REQUEST"),
     Success("000", "Success");
+
 
     private String code;
     private String message;
