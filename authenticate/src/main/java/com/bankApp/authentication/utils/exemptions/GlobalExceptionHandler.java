@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -37,5 +38,15 @@ public class GlobalExceptionHandler {
             return new ErrorResponseDTO("80",words[0], HttpStatus.MULTIPLE_CHOICES);
         }
         return new ErrorResponseDTO("80",ex.getMessage(), HttpStatus.MULTIPLE_CHOICES);
+    }
+
+
+
+    @ExceptionHandler(HttpClientErrorException.class)
+    public ErrorResponseDTO HttpClientErrorExceptionException(HttpServletRequest httpServletRequest, HttpClientErrorException ex) {
+
+        log.error("Error from {} is {} ", httpServletRequest.getRequestURI(), ex.getMessage());
+
+        return new ErrorResponseDTO("44", "Bad request", HttpStatus.BAD_REQUEST);
     }
 }

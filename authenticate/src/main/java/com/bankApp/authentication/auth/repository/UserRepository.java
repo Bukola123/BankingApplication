@@ -21,6 +21,9 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     Account findByAccountNo(String accountNo);
     User findByAccount_Id(Long accountId);
 
+    @Query("SELECT u FROM User u WHERE u.userId = ?1")
+    User findByUserID(Long userID);
+
 
 
 
