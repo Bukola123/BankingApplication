@@ -1,6 +1,6 @@
-package com.bankApp.authentication.utils.exemptions;
+package com.bankApp.utils.exemptions;
 
-import com.bankApp.authentication.utils.ErrorResponseDTO;
+import com.bankApp.utils.ErrorResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +10,6 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLIntegrityConstraintViolationException;
-
-import static java.lang.String.valueOf;
 
 @RestControllerAdvice
 @Slf4j
