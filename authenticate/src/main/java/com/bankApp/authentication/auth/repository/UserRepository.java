@@ -6,8 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
+
 
     @Query("SELECT u FROM User u WHERE u.email = ?1")
     User findByEmail(String email);
@@ -24,7 +28,15 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query("SELECT u FROM User u WHERE u.userId = ?1")
     User findByUserID(Long userID);
 
-
+//
+//    @Query("SELECT u FROM User u WHERE u.userId = ?1")
+//    User updateUserById(String id);
+//
+//    private String accountNo;
+//    private String email;
+//    private String phone;
+//    private String address;
+//update User set (email,phone,address) value () where userId = ?1
 
 
 

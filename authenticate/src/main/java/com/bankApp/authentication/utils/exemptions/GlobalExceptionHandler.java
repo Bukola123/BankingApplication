@@ -35,9 +35,9 @@ public class GlobalExceptionHandler {
 
         if (ex.getMessage().contains("Duplicate entry")){
             String[] words = ex.getMessage().split("for");
-            return new ErrorResponseDTO("80",words[0], HttpStatus.MULTIPLE_CHOICES);
+            return new ErrorResponseDTO("80",words[0], HttpStatus.BAD_REQUEST);
         }
-        return new ErrorResponseDTO("80",ex.getMessage(), HttpStatus.MULTIPLE_CHOICES);
+        return new ErrorResponseDTO("80",ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 

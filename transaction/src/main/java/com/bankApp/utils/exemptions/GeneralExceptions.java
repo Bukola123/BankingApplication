@@ -1,6 +1,7 @@
 package com.bankApp.utils.exemptions;
 
 
+import com.bankApp.utils.general.enums.ResponseCodes;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -21,10 +22,10 @@ public class GeneralExceptions extends RuntimeException{
         this.httpStatus = status;
     }
 
-//    public GeneralExceptions(ResponseEnum code, String message, HttpStatus status) {
-//        super(message);
-//        this.responseCode = code;
-//        this.responseMessage = message;
-//        this.httpStatus = status;
-//    }
+    public GeneralExceptions(ResponseCodes code, String message, HttpStatus status) {
+        super(message);
+        this.responseCode = code.getCode();
+        this.responseMessage = message;
+        this.httpStatus = status;
+    }
 }

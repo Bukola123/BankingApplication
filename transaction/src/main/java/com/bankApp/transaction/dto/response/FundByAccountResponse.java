@@ -17,6 +17,13 @@ public class FundByAccountResponse {
 
     private String status;
     private String message;
-    private Object data;
+    private PaystackFundResponse2 paystackFundResponse2;
+
+    @lombok.Data
+    public static class PaystackFundResponse2 {
+        private  String reference;
+        private String status;
+        private String display_text;
+    }
 
 }

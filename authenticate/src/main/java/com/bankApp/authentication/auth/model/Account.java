@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -19,10 +20,11 @@ public class Account {
     @Column(nullable = false, unique = true, length = 100)
     private String accountNo;
     private String accountType;
+    private String tierOfAccount;
     private int availableBal;
     private int withrawableBal;
-    private LocalTime createDate;
-    private LocalTime updateDate;
+    private LocalDateTime createDate;
+    private LocalDateTime updateDate;
 
 
 //    @OneToOne(targetEntity = Document.class, cascade = CascadeType.ALL)

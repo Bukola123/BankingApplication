@@ -21,5 +21,6 @@ public class PaystackFundByAccount {
 
     private String email;
     private String amount;
+    private String birthday;
     private Bank bank;
 }
