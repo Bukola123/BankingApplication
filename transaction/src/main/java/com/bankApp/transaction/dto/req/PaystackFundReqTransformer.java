@@ -18,10 +18,10 @@ public class PaystackFundReqTransformer implements Transformer<FundByBankTransfe
 
         PaystackFundByAccount paystackFundByAccount = new PaystackFundByAccount();
         paystackFundByAccount.setEmail(fundByBankTransferRequest.getEmail());
-        paystackFundByAccount.setAmount(fundByBankTransferRequest.getAmount());
+        paystackFundByAccount.setAmount(String.valueOf(fundByBankTransferRequest.getAmount()));
         Bank bank = new Bank();
 
-        bank.setAccount_number(fundByBankTransferRequest.getAccount_number());
+        bank.setAccount_number(fundByBankTransferRequest.getSource_account_number());
         bank.setBank(fundByBankTransferRequest.getBank());
         bank.setCode(fundByBankTransferRequest.getCode());
 

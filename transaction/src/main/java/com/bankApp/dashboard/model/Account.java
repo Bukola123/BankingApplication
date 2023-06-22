@@ -18,8 +18,8 @@ public class Account {
     @Column(nullable = false, unique = true, length = 100)
     private String accountNo;
     private String accountType;
-    private int availableBal;
-    private int withrawableBal;
+    private double availableBal;
+    private double withrawableBal;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 

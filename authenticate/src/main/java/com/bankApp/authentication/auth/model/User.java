@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -29,8 +30,8 @@ public class User {
     private String email;
     @Column(nullable = false, unique = true, length = 20)
     private String phone;
-    private LocalTime createDate ;
-    private LocalTime updateDate ;
+    private LocalDateTime createDate ;
+    private LocalDateTime updateDate ;
     private Boolean mobileReg = false ;
 
 //    private String passport;  //To be saved on cloudinary or AWS S3

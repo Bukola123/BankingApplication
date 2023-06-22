@@ -4,101 +4,33 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-<!--    <parent>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
-<!--        <version>2.7.5</version>-->
-<!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
-<!--    </parent>-->
-
     <parent>
-        <artifactId>BankApplication</artifactId>
-        <groupId>com.bankApp</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.5</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <modules>
+        <module>admin</module>
+        <module>authenticate</module>
+        <module>authenticate</module>
+        <module>transaction</module>
+    </modules>
 
-    <artifactId>Employee</artifactId>
+    <groupId>com.bankApp</groupId>
+    <artifactId>BankApplication</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>bankApp</name>
+    <description>This is a simple banking application that performs the following: Check your balance ,Make a deposit ,Make a withdrawal ,View the previous transaction  and Calculate Interest</description>
+
+
+
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
     </properties>
-
-<!--    <groupId>com.bankApp</groupId>-->
-<!--    <artifactId>Authentication</artifactId>-->
-<!--    <version>1.0-SNAPSHOT</version>-->
-<!--    <packaging>war</packaging>-->
-<!--    <name>bankApp</name>-->
-<!--    <description>This is a simple banking application that performs the following: Check your balance ,Make a deposit ,Make a withdrawal ,View the previous transaction  and Calculate Interest</description>-->
-
-<!--    <properties>-->
-<!--        <maven.compiler.source>8</maven.compiler.source>-->
-<!--        <maven.compiler.target>8</maven.compiler.target>-->
-<!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
-<!--    </properties>-->
-
-<!--    <dependencies>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
-<!--            <version>1.2.1.RELEASE</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-jdbc</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-web</artifactId>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-devtools</artifactId>-->
-<!--            <scope>runtime</scope>-->
-<!--            <optional>true</optional>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.projectlombok</groupId>-->
-<!--            <artifactId>lombok</artifactId>-->
-<!--            <optional>true</optional>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>mysql</groupId>-->
-<!--            <artifactId>mysql-connector-java</artifactId>-->
-<!--            <version>8.0.26</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--&lt;!&ndash;            <version>3.0.1</version>&ndash;&gt;-->
-<!--        </dependency>-->
-<!--    </dependencies>-->
-
-
-<!--    <build>-->
-<!--    <plugins>-->
-<!--        <plugin>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--            <configuration>-->
-<!--                <excludes>-->
-<!--                    <exclude>-->
-<!--                        <groupId>org.projectlombok</groupId>-->
-<!--                        <artifactId>lombok</artifactId>-->
-<!--                    </exclude>-->
-<!--                </excludes>-->
-<!--            </configuration>-->
-<!--        </plugin>-->
-<!--    </plugins>-->
-
-<!--        <finalName>Simple-Bank_App</finalName>-->
-<!--    </build>-->
 
     <dependencies>
         <dependency>
@@ -130,6 +62,20 @@
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>3.0.0</version>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-security</artifactId>-->
+        <!--        </dependency>-->
+
+        <dependency>
+
+            <groupId>javax.validation</groupId>
+
+            <artifactId>validation-api</artifactId>
+
+            <version>2.0.1.Final</version>
+
         </dependency>
     </dependencies>
 

@@ -1,6 +1,7 @@
 package com.bankApp.authentication.auth.controller;
 
 import com.bankApp.authentication.auth.dto.request.LoginUserRequest;
+import com.bankApp.authentication.auth.dto.request.UpdateUserRequest;
 import com.bankApp.authentication.auth.model.Account;
 import com.bankApp.authentication.auth.model.User;
 import com.bankApp.authentication.auth.service.CreateUserService;
@@ -31,23 +32,18 @@ public class UserController {
     public Response createUser(@RequestBody CreateUserRequest createUserRequest, MultipartFile multipartFile){
         return (createUserService.createUser(createUserRequest));
     }
-
     @PostMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response updateUser(@RequestBody CreateUserRequest createUserRequest){
+    public Response updateUser(@RequestBody UpdateUserRequest createUserRequest){
         return (createUserService.updateUser(createUserRequest));
     }
-
     @PostMapping(value = "/mobile/register", consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
     public Response mobileUserRegistration(@RequestBody MobileAppRegRequest mobileAppRegRequest){
         return (createUserService.mobileAppReg(mobileAppRegRequest));
     }
-
-
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE , produces = MediaType.APPLICATION_JSON_VALUE)
     public Response loginUser(@RequestBody LoginUserRequest request){
         return (createUserService.loginUser(request));
     }
-
 
     @PostMapping(value = "/get/account")
     public User getByAccountNo(@RequestBody Account accountNo){
@@ -55,8 +51,4 @@ public class UserController {
         user= createUserService.findByAccount(accountNo);
         return (user);
     }
-
-
-
-
 }

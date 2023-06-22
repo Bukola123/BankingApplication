@@ -1,6 +1,8 @@
 package com.bankApp.authentication.auth.service.impli;
 
+import com.bankApp.authentication.auth.dto.request.UpdateUserRequest;
 import com.bankApp.authentication.auth.model.*;
+import com.bankApp.authentication.auth.repository.JpaQuery;
 import com.bankApp.authentication.auth.service.CreateUserService;
 import com.bankApp.authentication.auth.dto.request.CreateUserRequest;
 import com.bankApp.authentication.auth.dto.request.LoginUserRequest;
@@ -21,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import static com.bankApp.authentication.utils.Utils.generateRandomNo;
@@ -44,6 +47,9 @@ public class CreateUserServiceImpli implements CreateUserService {
     private Utils utils;
 
 
+    @Autowired
+    private JpaQuery jpaQuery;
+
 
 
     public Response createUser(CreateUserRequest createUserRequest) {
@@ -57,6 +63,8 @@ public class CreateUserServiceImpli implements CreateUserService {
             response.setResponseMessage("User already registered");
             return  response;
         }
+
+        //Validate bvn
 
 //        ModelMapper modelMapper = new ModelMapper();
 //        user = modelMapper.map(createUserRequest,User.class);
@@ -72,46 +80,48 @@ public class CreateUserServiceImpli implements CreateUserService {
         user.setBvn(createUserRequest.getBvn());
 
 
-        user.setCreateDate(LocalTime.now());
+        user.setCreateDate(LocalDateTime.now());
 
         Account account = new Account();
         account.setAccountNo("00"+generateRandomNo(8));
-        account.setAccountType(createUserRequest.getAccountType());
-        account.setCreateDate(LocalTime.now());
+        account.setAccountType("Savings");
+        account.setTierOfAccount("1");
+        account.setCreateDate(LocalDateTime.now());
 
-        Document document = new Document();
-//        document.setUserId();
-        document.setPassport(createUserRequest.getPassport());
+//        Document document = new Document();
+////        document.setUserId();
+//        document.setPassport(createUserRequest.getPassport());
 
-        Utility utility = new Utility();
-        utility.setAccountNo(account.getAccountNo());
-        utility.setUtilityType(createUserRequest.getUtilityType());
-        utility.setUtilityAddress(createUserRequest.getUtilityAddress());
-        utility.setUtilityStatus("Pending");
-
-        //cloudinary call
-        utility.setCloudinary(createUserRequest.getUtilityImage());
-//        cloudinaryUtils.uploadDoc((File) multipartFile,account.getAccountNo(),"Utility");
-
-        IdDetails idDetails = new IdDetails();
-        idDetails.setIdType(createUserRequest.getIdType());
-        idDetails.setIdNumber(createUserRequest.getIdNumber());
-        idDetails.setIDLocation(createUserRequest.getIdLocation());
-        idDetails.setIdStatus("Pending");
-        idDetails.setCloudinary(createUserRequest.getIdImage());
-        idDetails.setAccountNo(account.getAccountNo());
-        idDetails.setIdSigned(createUserRequest.getIdSigned());
-
-        document.setUtility(utility);
-        document.setIdCard(idDetails);
-        document.setAccountNo(account.getAccountNo());
+//        Utility utility = new Utility();
+//        utility.setAccountNo(account.getAccountNo());
+//        utility.setUtilityType(createUserRequest.getUtilityType());
+//        utility.setUtilityAddress(createUserRequest.getUtilityAddress());
+//        utility.setUtilityStatus("Pending");
+//
+//        //cloudinary call
+//        utility.setCloudinary(createUserRequest.getUtilityImage());
+////        cloudinaryUtils.uploadDoc((File) multipartFile,account.getAccountNo(),"Utility");
+//
+//        IdDetails idDetails = new IdDetails();
+//        idDetails.setIdType(createUserRequest.getIdType());
+//        idDetails.setIdNumber(createUserRequest.getIdNumber());
+//        idDetails.setIDLocation(createUserRequest.getIdLocation());
+//        idDetails.setIdStatus("Pending");
+//        idDetails.setCloudinary(createUserRequest.getIdImage());
+//        idDetails.setAccountNo(account.getAccountNo());
+//        idDetails.setIdSigned(createUserRequest.getIdSigned());
+//
+//        document.setUtility(utility);
+//        document.setIdCard(idDetails);
+//        document.setAccountNo(account.getAccountNo());
 //        account.setDocument(document);
         user.setAccount(account);
 
 
 
-        log.info("User {} ", user);
-        userRepository.save(user);
+        log.info("User request {} ", user);
+       user =  userRepository.save(user);
+        log.info("User response {} ", user);
         Long userId= user.getUserId();
 
         log.info("User {}", userId);
@@ -119,6 +129,7 @@ public class CreateUserServiceImpli implements CreateUserService {
         if (userId != null){
             response.setResponseCode("000");
             response.setResponseMessage("Successful ");
+            response.setData(user);
 
             //Send notification to user
 
@@ -130,25 +141,26 @@ public class CreateUserServiceImpli implements CreateUserService {
     }
 
     @Override
-    public Response updateUser(CreateUserRequest createUserRequest) {
+    public Response updateUser(UpdateUserRequest updateUserRequest) {
 
-        log.info("Update user details ");
+        log.info("Update user details {} ",updateUserRequest);
         User user = new User();
+        Account account = new Account();
         Response response = new Response();
 
-        ModelMapper modelMapper = new ModelMapper();
+        account.setAccountNo(updateUserRequest.getAccountNo());
 
-        user = modelMapper.map(createUserRequest,User.class);
+        //Check if user on db by account no
+        User user1 = findByAccount(account);
+        log.info("User found {}", user1.getUserId());
+        if(user1.getUserId() != null){
+            updateUserRequest.setUpdateDate(LocalDateTime.now());
+            updateUserRequest.setPhone(user1.getPhone());
+            updateUserRequest.setAddress(user1.getAddress());
+            updateUserRequest.setUserId(user1.getUserId());
 
-        //Check if user on db
-        log.info("Email {}", createUserRequest.getEmail());
-        User user1 = userRepository.findByEmail(createUserRequest.getEmail());
-        user.setUpdateDate(LocalTime.now());
-
-        log.info("User 00 {}", user1);
-        log.info("User {}", user);
-        userRepository.save(user);
-//        userRepository.update(user);
+        log.info("User update {}", updateUserRequest);
+           user = jpaQuery.updateUserDetails(updateUserRequest);
         Long userId= user.getUserId();
 
         log.info("User {}", userId);
@@ -161,8 +173,15 @@ public class CreateUserServiceImpli implements CreateUserService {
             response.setResponseCode("99");
             response.setResponseMessage("Unsuccessful ");
         }
+
+        }else{
+            response.setResponseCode("99");
+            response.setResponseMessage("Unsuccessful ");
+        }
+
         return response;
     }
+
 
 
 
